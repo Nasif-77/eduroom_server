@@ -1,0 +1,51 @@
+const { User } = require('../../Common/Modal/userModal')
+
+
+const getStudents = async (req, res, next) => {
+    try {
+        const students = await User.find({ position: 'student' }).select({ __v: 0, password: 0 }).sort({ fname: 1 })
+        res.status(200).send(students)
+    } catch (error) {
+        res.status(400).json({
+            error
+        })
+    }
+
+}
+
+const updateProfile = async (req, res, next) => {
+    try {
+        console.log(req.body)
+        const student = await User.findByIdAndUpdate(req.params.id, {
+            $set: {
+                fname: req.body.name,
+                contact: req.body.contact,
+                email: req.body.email
+            }
+        })
+
+        res.status(200).send(student)
+    } catch (error) {
+        res.status(400).json({
+            error
+        })
+    }
+}
+
+
+const blockStudent = async (req, res) => {
+    try {
+        const student = await User.findByIdAndUpdate(req.params.id, {
+            $set: {
+                blocked: req.body.blocked
+            }
+        })
+        res.status(200).send(student)
+
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
+
+
+module.exports = { getStudents, updateProfile,blockStudent }

@@ -7,7 +7,7 @@ const getProfile =async (req,res)=>{
         const user = await User.findById(id)
         res.status(200).send(user)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(404).send(error)
     }
 }
 
@@ -23,7 +23,7 @@ const updateProfile = async (req,res)=>{
         })
         res.status(200).send(user)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 }
 

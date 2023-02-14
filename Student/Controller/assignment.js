@@ -22,7 +22,7 @@ const getAssignments = async (req, res) => {
         const files = await Assignment.find()
         res.status(200).send(files)
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(404).send(error.message)
     }
 }
 

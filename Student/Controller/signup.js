@@ -14,7 +14,7 @@ const createStudent = async (req, res, next) => {
       res.status(202)
     }
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       message: error
     })
   }

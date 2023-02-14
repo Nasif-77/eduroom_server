@@ -24,14 +24,14 @@ const loginStudent = async (req, res, next) => {
                         })
                     }
                 }else{
-                    res.status(400).json({ message: 'password' })
+                    res.status(401).json({ message: 'password' })
 
                 }
                 } else {
-                    res.status(400).json({ message: 'blocked' })
+                    res.status(401).json({ message: 'blocked' })
                 }
             } else {
-                res.status(400).json({
+                res.status(401).json({
                     message: false
                 })
             }

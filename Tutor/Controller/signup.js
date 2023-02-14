@@ -34,12 +34,12 @@ const otpConfirmTutor = async (req, res) => {
       let refreshToken = await signRefreshToken(result)
       res.status(200).send({ token, refreshToken })
     } else {
-      res.status(400).json({
+      res.status(401).json({
         message: 'wrong otp'
       })
     }
   } catch (error) {
-    res.status(400).send(error)
+    res.status(500).send(error)
   }
 
 }

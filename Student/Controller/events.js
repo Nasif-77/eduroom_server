@@ -7,7 +7,7 @@ const getEvents = async (req,res)=>{
         let response = await Events.find()
         res.status(200).send(response)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(404).send(error)
     }
 }
 

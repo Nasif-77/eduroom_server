@@ -8,7 +8,7 @@ const getAttendence = async(req,res)=>{
         const absentees = await Attendence.find().select({_id:0,__v:0})
         res.status(200).send(absentees)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(404).send(error)
     }
 }
 

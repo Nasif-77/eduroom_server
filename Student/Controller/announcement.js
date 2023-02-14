@@ -9,7 +9,7 @@ const getAnnouncement = async (req, res, next) => {
         res.status(200).send(announcements)
     }
     catch (err) {
-        res.status(400).json({
+        res.status(404).json({
             message: err.message
         })
     }

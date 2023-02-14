@@ -10,7 +10,6 @@ const postEvents = async (req,res)=>{
         if(event&&club&&description&&date){
             const response = new Events(req.body)
             const result = await response.save()
-            console.log(result)
             res.status(201).send(result)
         }
         
@@ -24,7 +23,7 @@ const getEvents = async (req,res)=>{
         let response = await Events.find()
         res.status(200).send(response)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(404).send(error)
     }
 }
 
@@ -40,7 +39,7 @@ const updateEvents = async(req,res)=>{
         })
         res.status(200).send(assignment)
     } catch (error) {
-        res.status(400)
+        res.status(500)
     }
 }
 
@@ -53,7 +52,7 @@ const deleteEvents = async (req,res)=>{
         const event = await Events.findByIdAndDelete(req.params.id)
         res.status(204).send(notes)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 }
 

@@ -37,7 +37,7 @@ const getPhotos = async (req, res) => {
         const files = await Photos.find()
         res.status(200).send(files)
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(404).send(error.message)
     }
 }
 
@@ -69,7 +69,7 @@ const photosPatch = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 }
 
@@ -94,7 +94,7 @@ const addPhotos = async (req, res) => {
         })
         res.status(201)
     } catch (error) {
-        res.status(400)
+        res.status(500)
     }
 }
 
@@ -104,7 +104,7 @@ const deleteSubject = async (req, res) => {
         const subject = await Photos.findByIdAndDelete(req.params.id)
         res.status(204).send(subject)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 }
 

@@ -8,7 +8,7 @@ const getAnnouncement = async (req, res, next) => {
         res.status(200).send(announcements)
     }
     catch (err) {
-        res.status(400).json({
+        res.status(404).json({
             message: err.message
         })
     }
@@ -51,7 +51,7 @@ const updateAnnouncements = async(req,res)=>{
         })
         res.status(200).send(notes)
     } catch (error) {
-        res.status(400)
+        res.status(500)
     }
 }
 
@@ -63,7 +63,7 @@ const deleteAnnouncements = async (req,res)=>{
         const announcement = await Announcement.findByIdAndDelete(req.params.id)
         res.status(204).send(notes)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 }
 

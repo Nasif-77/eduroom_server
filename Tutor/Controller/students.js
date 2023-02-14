@@ -6,7 +6,7 @@ const getStudents = async (req, res, next) => {
         const students = await User.find({ position: 'student' }).select({ __v: 0, password: 0 }).sort({ fname: 1 })
         res.status(200).send(students)
     } catch (error) {
-        res.status(400).json({
+        res.status(404).json({
             error
         })
     }
@@ -26,7 +26,7 @@ const updateProfile = async (req, res, next) => {
 
         res.status(200).send(student)
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             error
         })
     }
@@ -43,7 +43,7 @@ const blockStudent = async (req, res) => {
         res.status(200).send(student)
 
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 }
 

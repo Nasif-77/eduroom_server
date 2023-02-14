@@ -36,7 +36,7 @@ const getAssignments = async (req, res) => {
         const files = await Assignment.find()
         res.status(200).send(files)
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(404).send(error.message)
     }
 }
 
@@ -52,7 +52,7 @@ const updateAssignments = async (req, res) => {
         })
         res.status(200).send(assignment)
     } catch (error) {
-        console.log(error)
+        res.status(500).send(error)
     }
 }
 
@@ -68,7 +68,7 @@ const updateFile = async(req,res)=>{
             }
         })
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
         console.log(error.message)
     }
 }
@@ -79,7 +79,7 @@ const deleteAssignments = async (req, res) => {
         const assignment = await Assignment.findByIdAndDelete(req.params.id)
         res.status(204).send(assignment)
     } catch (error) {
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 }
 

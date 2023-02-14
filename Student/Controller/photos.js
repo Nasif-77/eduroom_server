@@ -9,7 +9,7 @@ const getPhotos = async (req, res) => {
         const files = await Photos.find()
         res.status(200).send(files)
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(404).send(error.message)
     }
 }
 

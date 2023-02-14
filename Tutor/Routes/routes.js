@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {upload} = require('../../Common/helpers/file_helper')
 const loginTutor = require('../Controller/login');
-const signupTutor = require('../Controller/signup');
+// const signupTutor = require('../Controller/signup');
 const student = require('../Controller/students');
 const attendenceTutor = require('../Controller/attendence');
 const announcementTutor = require('../Controller/announcement');
@@ -19,8 +19,8 @@ router.post('/login', loginTutor.loginTutor)
 
 
 //SignUp
-router.post('/signup', signupTutor.createTutor)
-router.post('/otp', signupTutor.otpConfirmTutor)
+// router.post('/signup', signupTutor.createTutor)
+// router.post('/otp', signupTutor.otpConfirmTutor)
 
 
 

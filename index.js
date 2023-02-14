@@ -6,7 +6,7 @@ const path = require('path')
 dotenv.config({ path: './config.env'})
 const cors = require('cors')
 
-mongoose.connect('mongodb://127.0.0.1:27017/project-one', {
+mongoose.connect(process.env.DATABASE, {
 })
 const db = mongoose.connection
 db.on('error', (err) => {
@@ -15,6 +15,7 @@ db.on('error', (err) => {
 db.once('open', () => {
     console.log('connected to database');
 })
+
 
 
 const studentRouter = require('./Student/Router/routes');

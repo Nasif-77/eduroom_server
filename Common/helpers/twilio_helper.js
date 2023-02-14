@@ -22,5 +22,5 @@ client.verify.v2
         return response.status
     };
    
-
+  
     module.exports ={sentOtp,confirmOtp}

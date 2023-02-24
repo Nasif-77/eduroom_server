@@ -33,8 +33,8 @@ app.use('/uploads',express.static(path.join(__dirname,'uploads')))
 app.use('/tutor', tutorRouter)
 app.use('/student', studentRouter)
 
-app.listen(5000, () => {
-    console.log(`connected on port ${process.env.PORT || 5000}`);
+app.listen(3000, () => {
+    console.log(`connected on port ${process.env.PORT || 3000}`);
 })
 
 

@@ -46,7 +46,5 @@ const otpConfirmTutor = async (req, res) => {
 
 
 
-// 
-
 
 module.exports = { createTutor, otpConfirmTutor }

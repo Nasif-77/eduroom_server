@@ -10,10 +10,10 @@ const postAssignment = async (req, res) => {
             fileName: req.file.originalname,
             filePath: req.file.path,
         })
-        let response = await file.save()
-        res.status(201).send('file uploaded succesfully')
+        await file.save()
+        res.status(201).json({ message: 'file uploaded succesfully' })
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).json({ error })
     }
 }
 
@@ -34,9 +34,9 @@ const postAssignment = async (req, res) => {
 const getAssignments = async (req, res) => {
     try {
         const files = await Assignment.find()
-        res.status(200).send(files)
+        res.status(200).json({ files })
     } catch (error) {
-        res.status(404).send(error.message)
+        res.status(404).json({ error })
     }
 }
 
@@ -50,26 +50,25 @@ const updateAssignments = async (req, res) => {
                 description: req.body.description,
             }
         })
-        res.status(200).send(assignment)
+        res.status(200).json({ assignment })
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).json({ error })
     }
 }
 
 
-const updateFile = async(req,res)=>{
+const updateFile = async (req, res) => {
     try {
         console.log(req.file)
-        const file = await Assignment.findByIdAndUpdate(req.params.id,{
-            $set:{
-                fileName:req.file.originalname,
-                filePath:req.file.path,
-                date:req.body.date
+        const file = await Assignment.findByIdAndUpdate(req.params.id, {
+            $set: {
+                fileName: req.file.originalname,
+                filePath: req.file.path,
+                date: req.body.date
             }
         })
     } catch (error) {
-        res.status(500).send(error)
-        console.log(error.message)
+        res.status(500).json({ error })
     }
 }
 
@@ -77,9 +76,9 @@ const updateFile = async(req,res)=>{
 const deleteAssignments = async (req, res) => {
     try {
         const assignment = await Assignment.findByIdAndDelete(req.params.id)
-        res.status(204).send(assignment)
+        res.status(204).json({assignment})
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).json({error})
     }
 }
 
@@ -87,4 +86,4 @@ const deleteAssignments = async (req, res) => {
 
 
 
-module.exports = { postAssignment, getAssignments, updateAssignments, deleteAssignments,updateFile }
+module.exports = { postAssignment, getAssignments, updateAssignments, deleteAssignments, updateFile }

@@ -2,37 +2,37 @@ const { User } = require('../../Common/Modal/userModal')
 const { signAccesToken, signRefreshToken } = require('../../Common/helpers/jwt_helper')
 
 
-const loginStudent = async (req, res, next) => {
+const loginStudent = async (req, res) => {
     try {
         if (req.body.email && req.body.password) {
 
             let user = await User.findOne({ email: req.body.email })
 
-            if (user) { 
+            if (user) {
                 if (!user.blocked) {
                     const result = await user.isValidPassword(req.body.password)
-                    if(result){
+                    if (result) {
 
-                    
-                    if (user.position === 'student') {
-                        let token = await signAccesToken(user)
-                        let refreshToken = await signRefreshToken(user)
-                        res.status(201).json({ token, refreshToken })
+
+                        if (user.position === 'student') {
+                            let token = await signAccesToken(user)
+                            res.cookie('token', token, { httpOnly: true })
+                            res.status(200).json({ message: "Succefully logged in" })
+                        } else {
+                            res.json({
+                                message: 'not student'
+                            })
+                        }
                     } else {
-                        res.json({
-                            message: 'tutor'
-                        })
-                    }
-                }else{
-                    res.status(401).json({ message: 'password' })
+                        res.status(400).json({ message: 'invalid password' })
 
-                }
+                    }
                 } else {
-                    res.status(401).json({ message: 'blocked' })
+                    res.status(401).json({ message: 'user blocked' })
                 }
             } else {
-                res.status(401).json({
-                    message: false
+                res.status(400).json({
+                    message: "invalid email"
                 })
             }
         } else {

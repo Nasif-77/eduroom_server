@@ -12,7 +12,7 @@ module.exports = {
             }
             const secret = process.env.ACCESS_TOKEN_SECRET
             const options = {
-                expiresIn:'20sec',
+                expiresIn:'20min',
                 issuer:'',
                 audience:user.id
             }
@@ -20,23 +20,6 @@ module.exports = {
                 if(err)return reject(err)
                 resolve(token)
             })
-        })
-    },
-    verifyAcessToken:(req,res,next)=>{
-        if(!req.headers['authorization']) return (next(createError.Unauthorized()))
-        const authHeader = req.headers['authorization']
-        const bearerToken = authHeader.split(' ')
-        const token = bearerToken[1]
-        jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,payload)=>{
-            if(err){
-                if(err.name==='JsonWebTokenError'){
-                    return next(createError.Unauthorized())
-                }else{
-                    return next(createError.Unauthorized(err.message))
-                }
-            }
-            req.payload = payload
-            next()
         })
     },
     signRefreshToken:(user)=> {

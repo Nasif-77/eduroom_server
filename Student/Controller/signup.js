@@ -1,17 +1,16 @@
 const { User } = require('../../Common/Modal/userModal')
 const createError = require('http-errors')
-const { signAccesToken, signRefreshToken } = require('../../Common/helpers/jwt_helper')
 const { sentOtp, confirmOtp } = require('../../Common/helpers/twilio_helper')
 
 
-const createStudent = async (req, res, next) => {
+const createStudent = async (req, res) => {
   try {
     const doesExist = await User.findOne({ email: req.body.email })
     if (doesExist) {
-      throw createError.Conflict(`${req.body.email} is already in use`)
+      res.status(409).json({ message: `${req.body.email} is already in use` })
     } else {
       await sentOtp(req.body.contact)
-      res.status(202)
+      res.status(200).json({ message: "otp send" })
     }
   } catch (error) {
     res.status(500).json({
@@ -27,11 +26,9 @@ const otpConfirmStudent = async (req, res) => {
     if (response === 'approved') {
       let student = new User(req.body)
       let result = await student.save()
-      let token = await signAccesToken(result)
-      let refreshToken = await signRefreshToken(result)
-      res.send({ token, refreshToken })
+      res.status(201).status({ message: "student created succesfully" })
     } else {
-      res.status(401).json({
+      res.status(400).json({
         message: 'wrong otp'
       })
     }

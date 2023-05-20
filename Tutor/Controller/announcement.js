@@ -4,8 +4,11 @@ const { Announcement } = require('../../Common/Modal/announcementModal')
 
 const getAnnouncement = async (req, res, next) => {
     try {
-        let announcements = await Announcement.find({}).select({__v:0})
-        res.status(200).send(announcements)
+        let announcements = await Announcement.find({}).select({ __v: 0 })
+
+        if (announcements) res.status(200).json(announcements)
+        else res.status(404).json({ message: "Not found" })
+
     }
     catch (err) {
         res.status(404).json({
@@ -23,47 +26,54 @@ const postAnnouncement = async (req, res, next) => {
         const imageUrl = req.file.path
         const imageName = req.file.originalname
 
-        const announcement = new Announcement({ 
-            date:date,
-            subject:subject,
-            description:description,
-            imageUrl:imageUrl,
-            imageName:imageName
-         })
+        const announcement = new Announcement({
+            date: date,
+            subject: subject,
+            description: description,
+            imageUrl: imageUrl,
+            imageName: imageName
+        })
         const success = await announcement.save();
+        if (success) {
             res.status(200).json({
                 message: "Succesfully added",
             })
+        } else {
+            res.status(400).json({ error: "Bad request" })
+        }
+
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).json({ error })
     }
 }
 
 
-const updateAnnouncements = async(req,res)=>{
+const updateAnnouncements = async (req, res) => {
     try {
-        const announcement = await Announcement.findByIdAndUpdate(req.body.id,{
-            $set : {
-                subject:req.body.subject,
-                description:req.body.description,
-                date:req.body.date
+        const announcement = await Announcement.findByIdAndUpdate(req.body.id, {
+            $set: {
+                subject: req.body.subject,
+                description: req.body.description,
+                date: req.body.date
             }
         })
-        res.status(200).send(notes)
+        if (announcement) res.status(200).json({ message: "Succesfully updated" })
+        else res.status(400).json({ error: "Bad request" })
+
     } catch (error) {
-        res.status(500)
+        res.status(500).json({ error })
     }
 }
 
 
 
-const deleteAnnouncements = async (req,res)=>{
+const deleteAnnouncements = async (req, res) => {
     console.log('req.body')
     try {
-        const announcement = await Announcement.findByIdAndDelete(req.params.id)
-        res.status(204).send(notes)
+        await Announcement.findByIdAndDelete(req.params.id)
+        res.status(204).json({ notes })
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).json({ error })
     }
 }
 
@@ -71,5 +81,5 @@ const deleteAnnouncements = async (req,res)=>{
 
 
 module.exports = {
-    postAnnouncement, getAnnouncement,updateAnnouncements,deleteAnnouncements
+    postAnnouncement, getAnnouncement, updateAnnouncements, deleteAnnouncements
 }

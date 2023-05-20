@@ -6,7 +6,7 @@ const createError = require('http-errors')
 const getAnnouncement = async (req, res, next) => {
     try {
         let announcements = await Announcement.find({}).select({__v:0})
-        res.status(200).send(announcements)
+        res.status(200).json({announcements})
     }
     catch (err) {
         res.status(404).json({

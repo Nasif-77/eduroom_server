@@ -16,20 +16,20 @@ const loginTutor = async (req, res, next) => {
                 const result = await user.isValidPassword(req.body.password)
                 if (result) {
                     let token = await signAccesToken(user)
-                    let refreshToken = await signRefreshToken(user)
-                    res.status(200).json({ token, refreshToken })
+                    res.cookie('cookie', token, { httpOnly: true })
+                    res.status(200).json({ token })
                 } else {
-                    res.status(401).json({
-                        message: false
+                    res.status(400).json({
+                        message: "invalid password"
                     })
                 }
             } else {
-                res.status(401).json({
-                    message: false
+                res.status(400).json({
+                    message: "invalid email"
                 })
             }
         } else {
-            res.status(401).json({
+            res.status(400).json({
                 message: "email or password missing"
             })
         }

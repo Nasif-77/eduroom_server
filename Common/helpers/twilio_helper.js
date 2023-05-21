@@ -1,9 +1,9 @@
 // Download the helper library from https://www.twilio.com/docs/node/install
 // Set environment variables for your credentials
 // Read more at http://twil.io/secure
-const accountSid = process.env.TWILIO_ACCOUNT_SID || "ACb83a50317faaaf0abbc802488b072427";
-const authToken = process.env.TWILIO_AUTH_TOKEN || "af82d2796ab2272abc71ac018d8ee9f3";
-const verifySid = process.env.YOUR_VERIFY_SID || "VAf98c7926dff9367684dc1c18821b58c5";
+const accountSid = process.env.TWILIO_ACCOUNT_SID  ;
+const authToken = process.env.TWILIO_AUTH_TOKEN  ;
+const verifySid = process.env.YOUR_VERIFY_SID ;
 const client = require("twilio")(accountSid, authToken);
 
 

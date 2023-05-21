@@ -4,7 +4,8 @@ const { User } = require('../../Common/Modal/userModal')
 const getStudents = async (req, res, next) => {
     try {
         const students = await User.find({ position: 'student' }).select({ __v: 0, password: 0 }).sort({ fname: 1 })
-        res.status(200).send(students)
+        if(students) res.status(200).json({students})
+        else res.status(404).json({error:"Not found"})
     } catch (error) {
         res.status(404).json({
             error

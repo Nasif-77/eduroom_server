@@ -16,10 +16,9 @@ const loginStudent = async (req, res) => {
 
                         if (user.position === 'student') {
                             let token = await signAccesToken(user)
-                            res.cookie('token', token, { httpOnly: true })
-                            res.status(200).json({ message: "Succefully logged in" })
+                            res.status(200).json({ token: token })
                         } else {
-                            res.json({
+                            res.status(400).json({
                                 message: 'not student'
                             })
                         }

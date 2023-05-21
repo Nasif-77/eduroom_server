@@ -9,7 +9,7 @@ const postEvents = async (req, res) => {
         if (event && club && description && date) {
             const response = new Events(req.body)
             const result = await response.save()
-            res.status(201).send(result)
+            res.status(201).json({ message: "Successfully uploaded" })
         }
 
     } catch (error) {
@@ -19,10 +19,12 @@ const postEvents = async (req, res) => {
 
 const getEvents = async (req, res) => {
     try {
-        let response = await Events.find()
-        res.status(200).send(response)
+        let events = await Events.find()
+        if (events) res.status(200).json({ events })
+        else res.status(404).json({ message: "Not found" })
+
     } catch (error) {
-        res.status(404).send(error)
+        res.status(404).json({ error })
     }
 }
 
@@ -36,7 +38,7 @@ const updateEvents = async (req, res) => {
                 date: req.body.date
             }
         })
-        res.status(200).send(assignment)
+        res.status(200).json({ message: "Successfully updated" })
     } catch (error) {
         res.status(500)
     }
@@ -49,9 +51,9 @@ const deleteEvents = async (req, res) => {
     console.log('req.body')
     try {
         const event = await Events.findByIdAndDelete(req.params.id)
-        res.status(204).send(notes)
+        res.status(204).json({ message: "Successfully deleted" })
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).json({ error })
     }
 }
 

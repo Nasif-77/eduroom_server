@@ -16,10 +16,13 @@ const { Notes } = require('../../Common/Modal/notesModal')
 
 const getNotes = async (req, res) => {
     try {
-        const files = await Notes.find()
-        res.status(200).json({files})
+        const notes = await Notes.find()
+
+        if (notes) res.status(200).json({ notes })
+        else res.status(404).json({ error: "Not found" })
+
     } catch (error) {
-        res.status(404).json({error})
+        res.status(404).json({ error })
     }
 }
 
@@ -27,4 +30,4 @@ const getNotes = async (req, res) => {
 
 
 
-module.exports = { getNotes}
+module.exports = { getNotes }

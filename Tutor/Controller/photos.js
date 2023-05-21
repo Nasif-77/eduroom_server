@@ -22,7 +22,7 @@ const postPhotos = async (req, res) => {
 
         let response = await multilpleFiles.save()
         console.log(response)
-        res.status(201).send('file uploaded succesfully')
+        res.status(201).json({ message: 'file uploaded successfully' })
     } catch (error) {
 
         res.status(400).send(error.message)

@@ -6,7 +6,7 @@ const getAnnouncement = async (req, res, next) => {
     try {
         let announcements = await Announcement.find({}).select({ __v: 0 })
 
-        if (announcements) res.status(200).json(announcements)
+        if (announcements) res.status(200).json({announcements})
         else res.status(404).json({ message: "Not found" })
 
     }
@@ -36,7 +36,7 @@ const postAnnouncement = async (req, res, next) => {
         const success = await announcement.save();
         if (success) {
             res.status(200).json({
-                message: "Succesfully added",
+                message: "Successfully added",
             })
         } else {
             res.status(400).json({ error: "Bad request" })
@@ -57,7 +57,7 @@ const updateAnnouncements = async (req, res) => {
                 date: req.body.date
             }
         })
-        if (announcement) res.status(200).json({ message: "Succesfully updated" })
+        if (announcement) res.status(200).json({ message: "Successfully updated" })
         else res.status(400).json({ error: "Bad request" })
 
     } catch (error) {

@@ -19,10 +19,12 @@ const { Assignment } = require('../../Common/Modal/assignmentModal')
 
 const getAssignments = async (req, res) => {
     try {
-        const files = await Assignment.find()
-        res.status(200).json({files})
+        const assignments = await Assignment.find()
+        if (assignments) res.status(200).json({ assignments })
+        else res.status(404).json({ error: "Not found" })
+
     } catch (error) {
-        res.status(404).json({error})
+        res.status(404).json({ error })
     }
 }
 
@@ -30,4 +32,4 @@ const getAssignments = async (req, res) => {
 
 
 
-module.exports = { getAssignments}
+module.exports = { getAssignments }

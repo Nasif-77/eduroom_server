@@ -26,7 +26,7 @@ const otpConfirmStudent = async (req, res) => {
     if (response === 'approved') {
       let student = new User(req.body)
       let result = await student.save()
-      res.status(201).status({ message: "student created succesfully" })
+      res.status(201).status({ message: "student created successfully" })
     } else {
       res.status(400).json({
         message: 'wrong otp'

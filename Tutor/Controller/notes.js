@@ -12,10 +12,10 @@ const postNotes = async (req, res) => {
             fileName: req.file.originalname,
             filePath: req.file.path,
         })
-        let response = await file.save()
-        res.status(201).send('file uploaded succesfully')
+        await file.save()
+        res.status(201).json({ message: 'file uploaded successfully' })
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).json({ error })
     }
 }
 
@@ -36,9 +36,11 @@ const postNotes = async (req, res) => {
 const getNotes = async (req, res) => {
     try {
         const files = await Notes.find()
-        res.status(200).send(files)
+        if (files) res.status(200).json({ files })
+        else res.status(404).json({ error: "Not found" })
+
     } catch (error) {
-        res.status(404).send(error.message)
+        res.status(404).json({ error })
     }
 }
 
@@ -53,10 +55,9 @@ const updateNotes = async (req, res) => {
                 description: req.body.description
             }
         })
-        res.status(200).send(notes)
+        res.status(200).json({notes})
     } catch (error) {
-        res.status(500).send(error)
-        console.log(error.message)
+        res.status(500).json({error})
     }
 }
 
@@ -66,9 +67,9 @@ const deleteNotes = async (req, res) => {
     console.log('req.body')
     try {
         const notes = await Notes.findByIdAndDelete(req.params.id)
-        res.status(204).send(notes)
+        res.status(204).json({message:"Successfully deleted"})
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).json({error})
     }
 }
 
@@ -82,7 +83,7 @@ const updateFile = async (req, res) => {
                 date: req.body.date
             }
         })
-        res.status(200)
+        res.status(200).json({message:"Successfully updated"})
     } catch (error) {
         res.status(500)
     }

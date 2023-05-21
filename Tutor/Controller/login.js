@@ -7,6 +7,7 @@ const loginTutor = async (req, res, next) => {
     try {
         const email = req.body.email
         const password = req.body.password
+        console.log(email, password)
 
         if (email && password) {
 
@@ -15,9 +16,12 @@ const loginTutor = async (req, res, next) => {
 
                 const result = await user.isValidPassword(req.body.password)
                 if (result) {
-                    let token = await signAccesToken(user)
-                    res.cookie('cookie', token, { httpOnly: true })
-                    res.status(200).json({ token })
+                    if (user.position === 'tutor') {
+                        let token = await signAccesToken(user)
+                        res.status(200).json({ token })
+                    } else {
+                        res.status(401).json({ message: "Unauthorized" })
+                    }
                 } else {
                     res.status(400).json({
                         message: "invalid password"

@@ -11,7 +11,7 @@ const postAssignment = async (req, res) => {
             filePath: req.file.path,
         })
         await file.save()
-        res.status(201).json({ message: 'file uploaded succesfully' })
+        res.status(201).json({ message: 'file uploaded successfully' })
     } catch (error) {
         res.status(400).json({ error })
     }
@@ -33,8 +33,8 @@ const postAssignment = async (req, res) => {
 
 const getAssignments = async (req, res) => {
     try {
-        const files = await Assignment.find()
-        res.status(200).json({ files })
+        const assignments = await Assignment.find()
+        res.status(200).json({ assignments })
     } catch (error) {
         res.status(404).json({ error })
     }
@@ -86,4 +86,4 @@ const deleteAssignments = async (req, res) => {
 
 
 
-module.exports = { postAssignment, getAssignments, updateAssignments, deleteAssignments, updateFile }
+module.exports = { postAssignment, getAssignments, updateAssignments, deleteAssignments, updateFile } 

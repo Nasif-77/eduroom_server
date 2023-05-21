@@ -18,7 +18,7 @@ const postAttendence = async(req,res)=>{
         const absentees = req.body.absentees
         const result = new Attendence({absentees})
         await result.save()
-        res.status(201)
+        res.status(201).json({message:"Successfully created"})
 
     } catch (error) {
         res.status(400).json(error)
